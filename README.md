@@ -10,12 +10,15 @@ A syndicate investment fund smart contract for ICOs
 + EIP20Token.sol - EIP20 Token interface
 
 
-           
+![CoinFabrik](https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png "CoinFabrik")
+![DG Global Ventures](https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png "DG Global Ventures")
 
 # Syndicate Smart Contract
 
 ## Overview
 The Syndicate Smart Contract was developed to receive investments to buy ICO tokens, buy the tokens negotiating a bonus price for the whole amount of Ethers, and finally, investors receive the ICO tokens after the lock period while administrators get a bonus if the tokens increase their original value more than 2X.
+
+![Syndicate Workflow](https://github.com/dggventures/syndicate/blob/master/images/syndicate-workflow.png "Syndicate Workflow")
 
 ## Parties
 **Administrators:** a list of addresses with a related % for each one. E.g.: [0x1111, 30%, 0x2222, 70%]. The total % must SUM exactly 100%. These addresses receive the administration fee and the bonus if it applies.
