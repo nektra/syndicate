@@ -23,10 +23,10 @@ alt="CoinFabrik" width="250" height="64" border="0" align="right" /></a>
 ## Overview
 The Syndicate Smart Contract was developed to receive investments to buy ICO tokens, buy the tokens negotiating a bonus price for the whole amount of Ethers, and finally, investors receive the ICO tokens after the lock period while administrators get a bonus if the tokens increase their original value more than 2X.
   
-<span style="display:block;text-align:center">
+<div>
 <img src="https://github.com/dggventures/syndicate/blob/master/images/syndicate-workflow.png" 
 alt="DG Global Ventures" width="681" height="417" border="0" align="center" margin-left="10%" />
-</span>
+</div>
 
 <br/>
 <br/>
