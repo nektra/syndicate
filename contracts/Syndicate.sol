@@ -39,6 +39,8 @@ contract Syndicate is Ownable {
     Admin[] public admins;
     // Balances of investors
     mapping(address => uint) public balances;
+    // Whitelisting of investors
+    mapping(address => bool) public investors;
 
     // How much money was invested in the contract
     uint public investment_pool = 0;
@@ -96,9 +98,18 @@ contract Syndicate is Ownable {
         start_deadline = now + investment_period;
     }
 
+    /* Allows or disallows an address to invest
+     * investor: The address to allow or disallow
+     * allowed: Wether to allow or disallow
+     */
+    function whitelist(address investor, bool allowed) public onlyOwner {
+        investors[investor] = allowed;
+    }
+
     /* Investors may invest using this function, before the lockin period
      */
     function buy() public payable {
+        require(investors[msg.sender]);
         require(msg.value > 0 && state == State.Investment);
         require(investment_pool.add(msg.value) <= investment_cap);
         balances[msg.sender] = balances[msg.sender].add(msg.value);
