@@ -10,8 +10,8 @@ A syndicate investment fund smart contract for ICOs
 + EIP20Token.sol - EIP20 Token interface
 
 
-![CoinFabrik](https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png "CoinFabrik")
-![DG Global Ventures](https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png "DG Global Ventures")
+<img src="https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png" 
+alt="DG Global Ventures" width="250" height="55" border="0" />
 
 <a href="https://www.coinfabrik.com"><img src="https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png" 
 alt="CoinFabrik" width="250" height="64" border="0" /></a>
