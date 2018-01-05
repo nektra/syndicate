@@ -1,8 +1,10 @@
 <img src="https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png" 
 alt="DG Global Ventures" width="289" height="64" border="0" align="left"/>
 
-<a href="https://www.coinfabrik.com"><img src="https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png" 
-alt="CoinFabrik" width="250" height="64" border="0" align="right" /></a>
+<p align="center">
+<img src="https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png" 
+alt="CoinFabrik" width="250" height="64" border="0" align="right" />
+</p>
 <br/>
 <br/>
 
