@@ -100,7 +100,7 @@ contract Syndicate is Ownable {
 
     /* Allows or disallows an address to invest
      * investor: The address to allow or disallow
-     * allowed: Wether to allow or disallow
+     * allowed: Whether to allow or disallow
      */
     function whitelist(address investor, bool allowed) public onlyOwner {
         investors[investor] = allowed;
