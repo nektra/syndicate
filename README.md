@@ -25,7 +25,7 @@ The Syndicate Smart Contract was developed to receive investments to buy ICO tok
 
 <div>
 <img src="https://github.com/dggventures/syndicate/blob/master/images/syndicate-workflow.png" 
-alt="DG Global Ventures" width="681" height="417" border="0" align="center" margin="left=10%" />
+alt="DG Global Ventures" width="681" height="417" border="0" align="center" margin-left="10%" />
 </div>
 
 <br/>
