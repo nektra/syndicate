@@ -14,7 +14,7 @@ A syndicate investment fund smart contract for ICOs
 ![DG Global Ventures](https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png "DG Global Ventures")
 
 <a href="https://www.coinfabrik.com"><img src="https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png" 
-alt="CoinFabrik" width="24" height="18" border="0" /></a>
+alt="CoinFabrik" width="150" height="50" border="0" /></a>
 
 # Syndicate Smart Contract
 
