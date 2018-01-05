@@ -1,6 +1,6 @@
 # Syndicate
 
-An investment fund smart contract for ICOs
+A Syndicate investment fund smart contract for ICOs
 
 ## Contracts
 
