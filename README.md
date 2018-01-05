@@ -26,7 +26,7 @@ The Syndicate Smart Contract was developed to receive investments to buy ICO tok
 
 ![Syndicate Workflow](https://github.com/dggventures/syndicate/blob/master/images/syndicate-workflow.png "Syndicate Workflow")
 <img src="https://github.com/dggventures/syndicate/blob/master/images/syndicate-workflow.png" 
-alt="DG Global Ventures" height="1024" border="0" align="left"/>
+alt="DG Global Ventures" width="1024" height="627" border="0" align="left"/>
 
 ## Parties
 **Administrators:** a list of addresses with a related % for each one. E.g.: [0x1111, 30%, 0x2222, 70%]. The total % must SUM exactly 100%. These addresses receive the administration fee and the bonus if it applies.
