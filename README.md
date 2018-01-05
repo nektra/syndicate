@@ -1,15 +1,3 @@
-# Syndicate
-
-A syndicate investment fund smart contract for ICOs
-
-## Contracts
-
-+ Syndicate.sol - Main contract
-+ Ownable.sol - Allows making privileged calls to the contract by the contract owner
-+ SafeMath.sol - Overflow checked math functions for integers
-+ EIP20Token.sol - EIP20 Token interface
-
-
 <img src="https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png" 
 alt="DG Global Ventures" width="289" height="64" border="0" align="left"/>
 
@@ -53,3 +41,11 @@ NOTE: If this function is not called after 10 days from the end of the locking p
 - withdrawTokens: after the lock period ends and the administrators call the end function (or after 10 days of the lock period), investors can call this function to get their tokens.
 
 (*) Some implementation changes are expected but they will not change the general functionality of the Smart Contract
+
+## Contracts
+
++ Syndicate.sol - Main contract
++ Ownable.sol - Allows making privileged calls to the contract by the contract owner
++ SafeMath.sol - Overflow checked math functions for integers
++ EIP20Token.sol - EIP20 Token interface
+
