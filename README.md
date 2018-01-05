@@ -19,7 +19,9 @@ The Syndicate Smart Contract was developed to receive investments to buy ICO tok
 
 ## Parties
 **Administrators:** a list of addresses with a related % for each one. E.g.: [0x1111, 30%, 0x2222, 70%]. The total % must SUM exactly 100%. These addresses receive the administration fee and the bonus if it applies.
+
 **Contract developer (CoinFabrik):** the address which will be able to make configuration changes.
+
 **Investors:** the addresses which send ether to the smart contract and will receive tokens in exchange.
 
 ## Details
