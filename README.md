@@ -10,6 +10,8 @@ A syndicate investment fund smart contract for ICOs
 + EIP20Token.sol - EIP20 Token interface
 
 
+
+
 <img src="https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png" 
 alt="DG Global Ventures" width="250" height="55" border="0" align="left"/>
 
