@@ -17,7 +17,6 @@ alt="DG Global Ventures" width="289" height="64" border="0" align="left"/>
 alt="CoinFabrik" width="250" height="64" border="0" align="right" /></a>
 <br/>
 <br/>
-<br/>
 
 # Syndicate Smart Contract
 
