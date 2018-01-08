@@ -7,7 +7,8 @@ alt="CoinFabrik" width="250" height="64" border="0" align="right" />
 </br>
 <br>
 </br>
-
+<br>
+</br>
 ## Syndicate Investment Fund Smart Contract
 
 ## Overview
