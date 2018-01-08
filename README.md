@@ -1,6 +1,5 @@
 <img src="https://github.com/dggventures/syndicate/blob/master/images/dg-global-ventures.png" 
 alt="DG Global Ventures" width="293" height="64" border="0" align="left"/>
-
 <img src="https://github.com/dggventures/syndicate/blob/master/images/coinfabrik.png" 
 alt="CoinFabrik" width="250" height="64" border="0" align="right" />
 <br>
