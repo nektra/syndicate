@@ -94,6 +94,7 @@ contract Syndicate is Ownable {
         require(admin_ratios.length == admin_addresses.length);
         uint sum = 0;
         for (uint i = 0; i < admin_ratios.length; i++) {
+            require(admin_ratios[i] > 0 && admin_addresses[i] != 0);
             sum = sum.add(admin_ratios[i]);
             admins.push(Admin(admin_addresses[i], admin_ratios[i], 0, false));
         }
