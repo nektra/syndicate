@@ -39,6 +39,9 @@ contract Syndicate is Ownable {
     Admin[] public admins;
     // Balances of investors
     mapping(address => uint) public balances;
+    // We record tokens associated with the investment pool to avoid touching them with
+    //  the approve_unwanted_tokens failsafe mechanism.
+    mapping(address => bool) public token_history;
 
     // How much money was invested in the contract
     uint public investment_pool = 0;
@@ -125,6 +128,7 @@ contract Syndicate is Ownable {
         total_tokens = _token.balanceOf(this);
         start_price = price;
         token = _token;
+        token_history[_token] = true;
         end_time = now + lock_period;
         state = State.Started;
     }
@@ -134,6 +138,7 @@ contract Syndicate is Ownable {
     function update_token(EIP20Token _token) public onlyOwner {
         require(state == State.Started && address(_token) != 0);
         token = _token;
+        token_history[_token] = true;
         total_tokens = _token.balanceOf(this);
     }
 
@@ -238,7 +243,7 @@ contract Syndicate is Ownable {
     /* We can use this function to move unwanted tokens in the contract
      */
     function approve_unwanted_tokens(EIP20Token _token, address dest, uint value) public onlyOwner {
-        require(_token != token);
+        require(!token_history[_token]);
         _token.approve(dest, value);
     }
 
