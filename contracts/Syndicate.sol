@@ -32,6 +32,7 @@ contract Syndicate is Ownable {
     struct Admin {
         address addr;
         uint ratio;
+        uint fee_balance;
         bool wants_refund;
     }
 
@@ -94,7 +95,7 @@ contract Syndicate is Ownable {
         uint sum = 0;
         for (uint i = 0; i < admin_ratios.length; i++) {
             sum = sum.add(admin_ratios[i]);
-            admins.push(Admin(admin_addresses[i], admin_ratios[i], false));
+            admins.push(Admin(admin_addresses[i], admin_ratios[i], 0, false));
         }
         require(sum == ratio_sum);
         state = State.Investment;
@@ -130,10 +131,9 @@ contract Syndicate is Ownable {
         require(state == State.Investment && now <= start_deadline);
         state = State.Started;
         uint fee_pool = investment_pool.mul(admin_fee).div(100);
-        // Send admin fees to admins
+        // Set admin fees
         for (uint i = 0; i < admins.length; i++) {
-            uint fees = fee_pool.mul(admins[i].ratio).div(ratio_sum);
-            admins[i].addr.transfer(fees);
+            admins[i].fee_balance = fee_pool.mul(admins[i].ratio).div(ratio_sum);
         }
         // Here be dragons
         require(ico.call.value(investment_pool.sub(fee_pool))());
@@ -151,6 +151,17 @@ contract Syndicate is Ownable {
         token = _token;
         token_history[_token] = true;
         total_tokens = _token.balanceOf(this);
+    }
+
+    function withdraw_fees() public {
+        require(state != State.Investment);
+        for (uint i = 0; i < admins.length; i++) {
+            if (admins[i].addr == msg.sender) {
+                require(admins[i].fee_balance > 0);
+                admins[i].fee_balance = 0;
+                msg.sender.transfer(admins[i].fee_balance);
+            }
+        }
     }
 
     /* Function to get the token balance of an investor
