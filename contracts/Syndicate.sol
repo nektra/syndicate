@@ -227,7 +227,7 @@ contract Syndicate is Ownable {
         for (uint i = 0; i < admins.length; i++) {
             if (admins[i].addr == msg.sender && !admins[i].wants_refund) {
                 admins[i].wants_refund = true;
-                refund_signs.add(1);
+                refund_signs = refund_signs.add(1);
             }
         }
         if (refund_signs == admins.length) {
@@ -246,7 +246,7 @@ contract Syndicate is Ownable {
         for (uint i = 0; i < admins.length; i++) {
             if (admins[i].addr == msg.sender && admins[i].wants_refund) {
                 admins[i].wants_refund = false;
-                refund_signs.sub(1);
+                refund_signs = refund_signs.sub(1);
             }
         }
     }
