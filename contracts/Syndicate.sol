@@ -128,6 +128,7 @@ contract Syndicate is Ownable {
     function start(address ico, EIP20Token _token, uint price) public onlyOwner {
         require(ico != 0 && address(_token) != 0);
         require(state == State.Investment && now <= start_deadline);
+        state = State.Started;
         uint fee_pool = investment_pool.mul(admin_fee).div(100);
         // Send admin fees to admins
         for (uint i = 0; i < admins.length; i++) {
@@ -141,7 +142,6 @@ contract Syndicate is Ownable {
         token = _token;
         token_history[_token] = true;
         end_time = now + lock_period;
-        state = State.Started;
     }
 
     /* Function to set the token accordingly in the case it changes its address
@@ -168,6 +168,7 @@ contract Syndicate is Ownable {
     function end(uint price) public onlyOwner {
         require(state == State.Started);
         require(end_time < now && now < end_time + end_window);
+        state = State.Ended;
         uint threshold = start_price.mul(success_threshold).div(100);
         // If we reach the threshold
         if (price > threshold) {
@@ -180,7 +181,6 @@ contract Syndicate is Ownable {
             }
             total_tokens = total_tokens.sub(admins_tokens);
         }
-        state = State.Ended;
     }
 
     /* Helper function for investor token withdrawal
