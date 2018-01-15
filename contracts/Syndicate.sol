@@ -154,6 +154,8 @@ contract Syndicate is Ownable {
         total_tokens = _token.balanceOf(this);
     }
 
+    /* Function for admins to withdraw their fees after start
+     */
     function withdraw_fees() public {
         require(state != State.Investment);
         for (uint i = 0; i < admins.length; i++) {
