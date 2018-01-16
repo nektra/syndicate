@@ -20,11 +20,10 @@ const value = web3.toWei(0.1);
 // Data sent along in the call to the target address
 const txn_data = [];
 // Order these parameters according to the solidity function signature
-const parameters = [target_address, value, txn_data];
+// const parameters = [];
 
 // Submit transaction to the multisig;
 // additional signatures may be needed before the transaction is executed
 // If the transaction execution fails, it can be made to execute again calling executeTransaction
-parameters.push({from: sender_account, gasPrice: 41000000000, gas: 300000});
-ms_instance.submitTransaction.apply(parameters);
+ms_instance.submitTransaction(target_address, value, txn_data, {from: sender_account, gasPrice: 41000000000, gas: 300000});
 
