@@ -19,15 +19,13 @@ const target_address = "0x8ffC991Fc4C4fC53329Ad296C1aFe41470cFFbb3";
 // Amount of ETH sent by the multisig to the target address
 const value = web3.toWei(0.1);
 // Data sent along in the call to the target address
-const txn_data = [];
-// Order these parameters according to the solidity function signature
-const parameters = [target_address, value, txn_data];
+const txn_data = undefined;
 
 // Submit transaction to the multisig;
 // additional signatures may be needed before the transaction is executed
 // If the transaction execution fails, it can be made to execute again calling executeTransaction
 // parameters.push({from: sender_account, gasPrice: 5000000000, gas: 300000});
 // ms_instance.submitTransaction.apply(parameters);
-const transfer_data = ms_instance.submitTransaction.getData.apply(parameters);
+const transfer_data = ms_instance.submitTransaction.getData(target_address, value, txn_data);
 
 console.log("Transfer data: " + transfer_data.toString());

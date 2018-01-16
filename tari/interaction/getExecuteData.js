@@ -16,14 +16,12 @@ const ms_instance = ms_interface.at(ms_address);
 
 // Id of the transaction that is to be confirmed
 const transaction_id = 0;
-// Order these parameters according to the solidity function signature
-const parameters = [transaction_id];
 
 // Confirm transaction in the multisig;
 // additional signatures may be needed before the transaction is executed
 // If the transaction execution fails, it can be made to execute again calling executeTransaction
 // parameters.push({from: sender_account, gasPrice: 5000000000, gas: 300000});
 // myInstance.submitTransaction.apply(parameters);
-const confirm_data = ms_instance.confirmTransaction.getData.apply(parameters);
+const confirm_data = ms_instance.confirmTransaction.getData(transaction_id);
 
 console.log("Confirm data: " + confirm_data.toString());
