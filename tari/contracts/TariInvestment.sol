@@ -32,6 +32,7 @@ contract TariInvestment is Ownable {
     refundingDeadline = now + 10 days;
   }
 
+  // Payments to this contract require a bit of gas. 100k should be enough.
   function() payable public {
     // Reject any value transfers once we have finished sending the balance to the target contract.
     require(state == Open);
