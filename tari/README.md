@@ -1,9 +1,5 @@
-## Deployment notes
+## Trustless Investment Smart Contract
 
-Deployment of this multisig contract requires the solidity compiler to be available in the `PATH` environment variable as `solc`.
+TARI investment Smart Contract was developed to secure investors money. Investors will send their ethers to the smart contract. After collecting all the investments DGGV (DG Global Ventures) will send a transaction to send the funds to TARI address (0x33efc5120d99a63bdf990013ecabbd6c900803ce) and collect the fees.
+The Smart Contract was specially developed to implement this logic and it doesn't allow any modification of the funds flow. DGGV has 7 days to send the invement transaction. In the event that the transaction isn't generated, the investors will be able to withdraw their investments. 
 
-To deploy, execute `cd deployment; solc-recompile.sh && node improv_deploy.js`.
-
-## ABI generation
-
-Generating the ABI only requires executing `cd deployment; solc-recompile.sh`. The ABI is stored in `deployment/build` in json format.
