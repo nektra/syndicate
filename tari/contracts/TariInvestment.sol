@@ -6,7 +6,7 @@ contract TariInvestment is Ownable {
 
   // These are addresses that shouldn't consume too much gas in their fallback functions if they are contracts.
   // Address of the target contract
-  address public investmentAddress = 0x33efc5120d99a63bdf990013ecabbd6c900803ce;
+  address public investmentAddress = 0x33eFC5120D99a63bdF990013ECaBbd6c900803CE;
   // Major partner address
   address public majorPartnerAddress = 0x8f0592bDCeE38774d93bC1fd2c97ee6540385356;
   // Minor partner address
@@ -26,7 +26,7 @@ contract TariInvestment is Ownable {
   enum State{Open, Closed, Refunding}
 
 
-  State public state = Open;
+  State public state = State.Open;
 
   function TariInvestment() public {
     refundingDeadline = now + 10 days;
@@ -35,7 +35,7 @@ contract TariInvestment is Ownable {
   // Payments to this contract require a bit of gas. 100k should be enough.
   function() payable public {
     // Reject any value transfers once we have finished sending the balance to the target contract.
-    require(state == Open);
+    require(state == State.Open);
     balances[msg.sender] += msg.value;
     totalInvestment += msg.value;
   }
@@ -45,9 +45,9 @@ contract TariInvestment is Ownable {
   function execute_transfer(uint transfer_amount) public onlyOwner {
     // Close down investments. Transferral of funds shouldn't be possible during refunding.
     State current_state = state;
-    if (current_state == Open)
-      state = Closed;
-    require(state == Closed);
+    if (current_state == State.Open)
+      state = State.Closed;
+    require(state == State.Closed);
 
     // Major fee is 1,50% = 15 / 1000
     uint major_fee = transfer_amount * 15 / 1000;
@@ -68,9 +68,9 @@ contract TariInvestment is Ownable {
   // Refund an investor when he sends a withdrawal transaction.
   // Only available once refunds are enabled.
   function withdraw() public {
-    if (state != Refunding) {
+    if (state != State.Refunding) {
       require(refundingDeadline <= now);
-      state = Refunding;
+      state = State.Refunding;
       availableRefunds = this.balance;
     }
 
