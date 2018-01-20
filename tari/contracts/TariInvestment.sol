@@ -44,8 +44,7 @@ contract TariInvestment is Ownable {
   // It is expected of all addresses to allow low gas transferrals of ether.
   function execute_transfer(uint transfer_amount) public onlyOwner {
     // Close down investments. Transferral of funds shouldn't be possible during refunding.
-    State current_state = state;
-    if (current_state == State.Open)
+    if (state == State.Open)
       state = State.Closed;
     require(state == State.Closed);
 
