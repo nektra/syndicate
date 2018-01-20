@@ -13,11 +13,8 @@ const ti_abi = require("../deployment/TariInvestment.abi.js");
 const ti_interface = web3.eth.contract(ti_abi);
 const ti_instance = ti_interface.at(ti_address);
 
-// Amount of ETH sent by the multisig to the target address
-const amount = web3.toWei(0.1);
-
 // Submit transaction to the multisig;
 // additional signatures may be needed before the transaction is executed
 // If the transaction execution fails, it can be made to execute again calling executeTransaction
-ti_instance.execute_transfer(amount, {from: sender_account, gasPrice: 5000000000, gas: 300000});
+ti_instance.execute_transfer({from: sender_account, gasPrice: 5000000000, gas: 300000});
 
