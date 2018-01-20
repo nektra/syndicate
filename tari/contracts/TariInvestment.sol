@@ -73,6 +73,7 @@ contract TariInvestment is Ownable {
       availableRefunds = this.balance;
     }
 
+    // withdrawal = availableRefunds * investor's share
     uint withdrawal = availableRefunds * balances[msg.sender] / totalInvestment;
     balances[msg.sender] = 0;
     msg.sender.transfer(withdrawal);
