@@ -14,11 +14,11 @@ contract TariInvestment is Ownable {
   // Record balances to allow refunding
   mapping(address => uint) public balances;
   // Total received. Used for refunding.
-  uint totalInvestment;
+  uint public totalInvestment;
   // Available refunds. Used for refunding.
-  uint availableRefunds;
+  uint public availableRefunds;
   // Deadline when refunding starts.
-  uint refundingDeadline;
+  uint public refundingDeadline;
   // States: Open for investments - allows ether investments; transitions to Closed as soon as
   //                                a transfer to the target investment address is made,
   //         Closed for investments - only transfers to target investment address are allowed,
