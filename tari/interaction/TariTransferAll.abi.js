@@ -1,0 +1,1 @@
+module.exports = [{"constant":false,"inputs":[],"name":"execute_transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];

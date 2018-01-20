@@ -11,8 +11,9 @@ const sender_account = "0x54d9249c776c56520a62faecb87a00e105e8c9dc";
 // Not actually necessary when encoding parameters according to the ABI
 const ti_address = "0x7078b01170768c6dB7BD9f515305682e52664cd3";
 
+// Import specific transfer function ABI to cope with lack of overload resolution
+const ti_abi = require("./TariTransferAll.abi.js");
 // Construct interface of the tari contract instance
-const ti_abi = require("../deployment/TariInvestment.abi.js");
 const ti_interface = web3.eth.contract(ti_abi);
 const ti_instance = ti_interface.at(ti_address);
 
