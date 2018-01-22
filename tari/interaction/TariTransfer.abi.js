@@ -1,1 +1,0 @@
-module.exports = [{"constant":false,"inputs":[{"name":"transfer_amount","type":"uint256"}],"name":"execute_transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
