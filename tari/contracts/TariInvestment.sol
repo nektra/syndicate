@@ -4,7 +4,6 @@ import "./Ownable.sol";
 
 contract TariInvestment is Ownable {
 
-  // These are addresses that shouldn't consume too much gas in their fallback functions if they are contracts.
   // Address of the target contract
   address public investmentAddress = 0x33eFC5120D99a63bdF990013ECaBbd6c900803CE;
   // Major partner address
@@ -19,6 +18,8 @@ contract TariInvestment is Ownable {
   uint public availableRefunds;
   // Deadline when refunding starts.
   uint public refundingDeadline;
+  // Gas used for withdrawals.
+  uint public withdrawal_gas;
   // States: Open for investments - allows ether investments; transitions to Closed as soon as
   //                                a transfer to the target investment address is made,
   //         Closed for investments - only transfers to target investment address are allowed,
@@ -29,7 +30,8 @@ contract TariInvestment is Ownable {
   State public state = State.Open;
 
   function TariInvestment() public {
-    refundingDeadline = now + 10 days;
+    refundingDeadline = now + 4 days;
+    set_withdrawal_gas(3000);
   }
 
   // Payments to this contract require a bit of gas. 100k should be enough.
@@ -41,8 +43,7 @@ contract TariInvestment is Ownable {
   }
 
   // Transfer some funds to the target investment address.
-  // It is expected of all addresses to allow low gas transferrals of ether.
-  function execute_transfer(uint transfer_amount) public onlyOwner {
+  function execute_transfer(uint transfer_amount, uint gas_amount) public onlyOwner {
     // Close down investments. Transferral of funds shouldn't be possible during refunding.
     State current_state = state;
     if (current_state == State.Open)
@@ -53,11 +54,11 @@ contract TariInvestment is Ownable {
     uint major_fee = transfer_amount * 15 / 1000;
     // Minor fee is 1% = 10 / 1000
     uint minor_fee = transfer_amount * 10 / 1000;
-    majorPartnerAddress.transfer(major_fee);
-    minorPartnerAddress.transfer(minor_fee);
+    majorPartnerAddress.transfer.gas(gas_amount)(major_fee);
+    minorPartnerAddress.transfer.gas(gas_amount)(minor_fee);
 
-    // Send the rest 
-    investmentAddress.transfer(transfer_amount - major_fee - minor_fee);
+    // Send the rest
+    investmentAddress.transfer.gas(gas_amount)(transfer_amount - major_fee - minor_fee);
   }
 
   // Convenience function to transfer all available balance.
@@ -76,7 +77,13 @@ contract TariInvestment is Ownable {
 
     uint withdrawal = availableRefunds * balances[msg.sender] / totalInvestment;
     balances[msg.sender] = 0;
-    msg.sender.transfer(withdrawal);
+    msg.sender.transfer.gas(withdrawal_gas)(withdrawal);
+  }
+
+  // Sets the amount of gas allowed to withdrawers
+  function set_withdrawal_gas(uint gas_amount) public onlyOwner {
+    require(gas_amount >= 3000);
+    withdrawal_gas = gas_amount;
   }
 
 }
