@@ -57,7 +57,7 @@ contract TariInvestment is Ownable {
   }
 
   // Convenience function to transfer all available balance.
-  function execute_transfer() public onlyOwner {
+  function execute_transfer_all() public onlyOwner {
     execute_transfer(this.balance);
   }
 
