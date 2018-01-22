@@ -49,11 +49,11 @@ contract TariInvestment is Ownable {
     uint major_fee = transfer_amount * 15 / 1000;
     // Minor fee is 1% = 10 / 1000
     uint minor_fee = transfer_amount * 10 / 1000;
-    majorPartnerAddress.transfer.gas(gas_amount)(major_fee);
-    minorPartnerAddress.transfer.gas(gas_amount)(minor_fee);
+    require(majorPartnerAddress.call.gas(gas_amount).value(major_fee)());
+    require(minorPartnerAddress.call.gas(gas_amount).value(minor_fee)());
 
     // Send the rest
-    investmentAddress.transfer.gas(gas_amount)(transfer_amount - major_fee - minor_fee);
+    require(investmentAddress.call.gas(gas_amount).value(transfer_amount - major_fee - minor_fee)());
   }
 
   // Convenience function to transfer all available balance.
@@ -73,7 +73,7 @@ contract TariInvestment is Ownable {
     // withdrawal = availableRefunds * investor's share
     uint withdrawal = availableRefunds * balances[msg.sender] / totalInvestment;
     balances[msg.sender] = 0;
-    msg.sender.transfer.gas(withdrawal_gas)(withdrawal);
+    require(msg.sender.call.gas(withdrawal_gas).value(withdrawal)());
   }
 
   // Convenience function to allow immediate refunds.
