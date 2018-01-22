@@ -57,8 +57,8 @@ contract TariInvestment is Ownable {
   }
 
   // Convenience function to transfer all available balance.
-  function execute_transfer_all() public onlyOwner {
-    execute_transfer(this.balance);
+  function execute_transfer_all(uint gas_amount) public onlyOwner {
+    execute_transfer(this.balance, gas_amount);
   }
 
   // Refund an investor when he sends a withdrawal transaction.
