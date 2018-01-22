@@ -20,11 +20,9 @@ contract TariInvestment is Ownable {
   uint public refundingDeadline;
   // Gas used for withdrawals.
   uint public withdrawal_gas;
-  // States: Open for investments - allows ether investments; transitions to Closed as soon as
-  //                                a transfer to the target investment address is made,
-  //         Closed for investments - only transfers to target investment address are allowed,
+  // States: Open for investments - allows investments and transfers,
   //         Refunding investments - any state can transition to refunding state
-  enum State{Open, Closed, Refunding}
+  enum State{Open, Refunding}
 
 
   State public state = State.Open;
@@ -44,11 +42,8 @@ contract TariInvestment is Ownable {
 
   // Transfer some funds to the target investment address.
   function execute_transfer(uint transfer_amount, uint gas_amount) public onlyOwner {
-    // Close down investments. Transferral of funds shouldn't be possible during refunding.
-    State current_state = state;
-    if (current_state == State.Open)
-      state = State.Closed;
-    require(state == State.Closed);
+    // Transferral of funds shouldn't be possible during refunding.
+    require(state == State.Open);
 
     // Major fee is 1,50% = 15 / 1000
     uint major_fee = transfer_amount * 15 / 1000;
@@ -67,7 +62,7 @@ contract TariInvestment is Ownable {
   }
 
   // Refund an investor when he sends a withdrawal transaction.
-  // Only available once refunds are enabled.
+  // Only available once refunds are enabled or the deadline for transfers is reached.
   function withdraw() public {
     if (state != State.Refunding) {
       require(refundingDeadline <= now);
@@ -78,6 +73,11 @@ contract TariInvestment is Ownable {
     uint withdrawal = availableRefunds * balances[msg.sender] / totalInvestment;
     balances[msg.sender] = 0;
     msg.sender.transfer.gas(withdrawal_gas)(withdrawal);
+  }
+
+  // Convenience function to allow immediate refunds.
+  function enable_refunds() public onlyOwner {
+    state = State.Refunding;
   }
 
   // Sets the amount of gas allowed to withdrawers
