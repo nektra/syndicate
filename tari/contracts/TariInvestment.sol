@@ -29,7 +29,8 @@ contract TariInvestment is Ownable {
 
   function TariInvestment() public {
     refundingDeadline = now + 4 days;
-    set_withdrawal_gas(3000);
+    // Withdrawal gas is added to the standard 2300 by the solidity compiler.
+    set_withdrawal_gas(1000);
   }
 
   // Payments to this contract require a bit of gas. 100k should be enough.
@@ -83,7 +84,6 @@ contract TariInvestment is Ownable {
 
   // Sets the amount of gas allowed to withdrawers
   function set_withdrawal_gas(uint gas_amount) public onlyOwner {
-    require(gas_amount >= 3000);
     withdrawal_gas = gas_amount;
   }
 
