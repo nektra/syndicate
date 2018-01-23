@@ -25,7 +25,7 @@ contract TariInvestment is Ownable {
   //         Refunding investments - any state can transition to refunding state
   enum State{Open, Refunding}
 
-
+  // Start the contract in Open state since all configuration is decided on at compile time.
   State public state = State.Open;
 
   function TariInvestment() public {
