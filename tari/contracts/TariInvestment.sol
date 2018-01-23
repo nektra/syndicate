@@ -35,7 +35,7 @@ contract TariInvestment is Ownable {
 
   // Payments to this contract require a bit of gas. 100k should be enough.
   function() payable public {
-    // Reject any value transfers once we have finished sending the balance to the target contract.
+    // Reject any value transfers once refunding stage has been entered.
     require(state == State.Open);
     balances[msg.sender] += msg.value;
     totalInvestment += msg.value;
@@ -50,6 +50,8 @@ contract TariInvestment is Ownable {
     uint major_fee = transfer_amount * 15 / 1000;
     // Minor fee is 1% = 10 / 1000
     uint minor_fee = transfer_amount * 10 / 1000;
+
+    // These calls give no opportunity of reentrancy as long as the owner is not a contract.
     require(majorPartnerAddress.call.gas(gas_amount).value(major_fee)());
     require(minorPartnerAddress.call.gas(gas_amount).value(minor_fee)());
 
@@ -65,21 +67,28 @@ contract TariInvestment is Ownable {
   // Refund an investor when he sends a withdrawal transaction.
   // Only available once refunds are enabled or the deadline for transfers is reached.
   function withdraw() public {
+    // Ensure refunding state can be reached if there is no owner intervention.
     if (state != State.Refunding) {
       require(refundingDeadline <= now);
-      state = State.Refunding;
-      availableRefunds = this.balance;
+      enable_refunds_internal();
     }
 
     // withdrawal = availableRefunds * investor's share
     uint withdrawal = availableRefunds * balances[msg.sender] / totalInvestment;
     balances[msg.sender] = 0;
+    // Call is made at the end to ensure observable state of the contract is final
     require(msg.sender.call.gas(withdrawal_gas).value(withdrawal)());
   }
 
   // Convenience function to allow immediate refunds.
   function enable_refunds() public onlyOwner {
+    enable_refunds_internal();
+  }
+
+  // Implements transition to refunding state.
+  function enable_refunds_internal() private {
     state = State.Refunding;
+    availableRefunds = this.balance;
   }
 
   // Sets the amount of gas allowed to withdrawers
