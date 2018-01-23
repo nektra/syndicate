@@ -43,7 +43,7 @@ contract TariInvestment is Ownable {
   }
 
   // Transfer some funds to the target investment address.
-  function execute_transfer(uint transfer_amount, uint gas_amount) public onlyOwner {
+  function execute_transfer(uint transfer_amount, uint gas) public onlyOwner {
     // Transferral of funds shouldn't be possible during refunding.
     require(state == State.Open);
 
@@ -53,16 +53,16 @@ contract TariInvestment is Ownable {
     uint minor_fee = transfer_amount * 10 / 1000;
 
     // These calls give no opportunity of reentrancy as long as the owner is not a contract.
-    require(major_partner_address.call.gas(gas_amount).value(major_fee)());
-    require(minor_partner_address.call.gas(gas_amount).value(minor_fee)());
+    require(major_partner_address.call.gas(gas).value(major_fee)());
+    require(minor_partner_address.call.gas(gas).value(minor_fee)());
 
     // Send the rest
-    require(investment_address.call.gas(gas_amount).value(transfer_amount - major_fee - minor_fee)());
+    require(investment_address.call.gas(gas).value(transfer_amount - major_fee - minor_fee)());
   }
 
   // Convenience function to transfer all available balance.
-  function execute_transfer_all(uint gas_amount) public onlyOwner {
-    execute_transfer(this.balance, gas_amount);
+  function execute_transfer_all(uint gas) public onlyOwner {
+    execute_transfer(this.balance, gas);
   }
 
   // Refund an investor when he sends a withdrawal transaction.
@@ -93,8 +93,8 @@ contract TariInvestment is Ownable {
   }
 
   // Sets the amount of gas allowed to withdrawers
-  function set_withdrawal_gas(uint gas_amount) public onlyOwner {
-    withdrawal_gas = gas_amount;
+  function set_withdrawal_gas(uint gas) public onlyOwner {
+    withdrawal_gas = gas;
   }
 
 }
