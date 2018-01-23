@@ -2,6 +2,7 @@ pragma solidity ^0.4.19;
 
 import "./Ownable.sol";
 
+// The owner of this contract should be an externally owned account
 contract TariInvestment is Ownable {
 
   // Address of the target contract
@@ -29,7 +30,7 @@ contract TariInvestment is Ownable {
 
   function TariInvestment() public {
     refundingDeadline = now + 4 days;
-    // Withdrawal gas is added to the standard 2300 by the solidity compiler.
+    // Withdrawal gas is added to the 2300 call stipend by the EVM (if it has non-zero value).
     set_withdrawal_gas(1000);
   }
 
