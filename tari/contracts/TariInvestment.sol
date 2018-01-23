@@ -68,6 +68,8 @@ contract TariInvestment is Ownable {
   // Refund an investor when he sends a withdrawal transaction.
   // Only available once refunds are enabled or the deadline for transfers is reached.
   function withdraw() public {
+    // Only an investor is allowed to call this function.
+    require(balances[msg.sender] > 0);
     // Ensure refunding state can be reached if there is no owner intervention.
     if (state != State.Refunding) {
       require(refunding_deadline <= now);
