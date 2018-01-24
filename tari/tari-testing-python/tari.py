@@ -44,9 +44,17 @@ def addAddress():
 
 def balance(address_or_index):
   if isinstance(address_or_index, str):
-    return eth.getBalance(address_or_index)
+    return web3.fromWei(eth.getBalance(address_or_index), "ether")
+    #return eth.getBalance(address_or_index)
   else:
-    return eth.getBalance(eth.accounts[address_or_index])
+    return web3.fromWei(eth.getBalance(eth.accounts[address_or_index]), "ether")
+    #return eth.getBalance(eth.accounts[address_or_index])
+
+def balances():
+  bals = []
+  for acc in eth.accounts:
+    bals.append(balance(acc))
+  return bals
 
 def buy(buyer_index, value):
   tx_hash = eth.sendTransaction({"from": eth.accounts[buyer_index], "value": value*(10**18), "gas": 200000, "gasPrice": 0, "to": contract.address})
@@ -55,7 +63,7 @@ def buy(buyer_index, value):
   
 
 def transfer(amount, gas_amount):
-  tx_hash = contract.transact(trans()).execute_transfer(amount, gas_amount)
+  tx_hash = contract.transact(trans()).execute_transfer(amount*(10**18), gas_amount)
   time.sleep(2)
   print(sys._getframe().f_code.co_name, gas(tx_hash))
   
@@ -82,14 +90,71 @@ def set_withdrawal_gas(gas_amount):
   print(sys._getframe().f_code.co_name, gas(tx_hash))
   
 
-def ideal_lifecycle():
 
-  buy(1,1000)
-  transfer_all(3000)
+def ideal_lifecycle():
+  init_bals = balances()
+  contract_bal_i = balance(contract.address)
+  buy(1,1000)  
+  later_bals = balances()
+  transfer(100,3000)
   buy(2,5000)
   buy(3,3000)
   buy(4,7000)
-  transfer_all(3000)
-  
+  transfer_all(3000) 
+  last_bals = balances()
+  print([x-y for x,y in zip(init_bals,last_bals)])  
+  contract_bal_f = balance(contract.address)
+  print("Contract balance difference:", contract_bal_i - contract_bal_f)
+
+
+def partial_refund():
+  contract_bal_i = balance(contract.address)
+  init_bals = balances()
+  buy(1,1000)  
+  later_bals = balances()
+  transfer(1000,3000)
+  buy(2,1000)
+  buy(3,2000)
+  time.sleep(20)
+  withdraw(2)
+  withdraw(3)
+  withdraw(1)
+  last_bals = balances()
+  contract_bal_f = balance(contract.address)
+  print("Contract balance difference:", contract_bal_i - contract_bal_f)
+  print([x-y for x,y in zip(init_bals,last_bals)])  
+
+
+def manual_refund_total():
+  init_bals = balances()
+  contract_bal_i = balance(contract.address)
+  buy(1,1000)  
+  buy(2,1000)
+  buy(3,2000)
+  enable_refunds()
+  withdraw(2)
+  withdraw(3)
+  withdraw(1)
+  last_bals = balances()
+  print([x-y for x,y in zip(init_bals,last_bals)])  
+  contract_bal_f = balance(contract.address)
+  print("Contract balance difference:", contract_bal_i - contract_bal_f)
+
+
+def auto_refund_total():
+  init_bals = balances()
+  contract_bal_i = balance(contract.address)
+  buy(1,1000)  
+  buy(2,1000)
+  buy(3,2000)
+  time.sleep(20)
+  withdraw(2)
+  withdraw(3)
+  withdraw(1)
+  last_bals = balances()
+  print([x-y for x,y in zip(init_bals,last_bals)])  
+  contract_bal_f = balance(contract.address)
+  print("Contract balance difference:", contract_bal_i - contract_bal_f)
+
+
 addAddress()
-ideal_lifecycle()
