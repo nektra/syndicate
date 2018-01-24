@@ -34,7 +34,7 @@ contract TariInvestment is Ownable {
   }
 
     // Sets the amount of gas allowed to investors
-  function set_trasnfer_gas(uint transfer_gas) public onlyOwner {
+  function set_transfer_gas(uint transfer_gas) public onlyOwner {
     gas = transfer_gas;
   }
 
