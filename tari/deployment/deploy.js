@@ -12,4 +12,4 @@ const account = "0x54d9249c776c56520a62faecb87a00e105e8c9dc";
 
 // Setup contract objects
 const ti_contract = web3.eth.contract(ti_abi);
-ti_contract.new({from: account, data: "0x" + ti_bytecode, gasPrice: 12000000000, gas: 600000});
+ti_contract.new({from: account, data: "0x" + ti_bytecode, gasPrice: 25000000000, gas: 600000});
