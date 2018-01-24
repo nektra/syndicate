@@ -61,6 +61,19 @@ def buy(buyer_index, value):
   time.sleep(2)
   print(sys._getframe().f_code.co_name, gas(tx_hash))
   
+def partners():
+  partners = []
+  partners.append(contract.call().investment_address())
+  partners.append(contract.call().major_partner_address())
+  partners.append(contract.call().minor_partner_address())
+  return partners
+
+def partners_balances():
+  bals = []
+  parts = partners()
+  for part in parts:
+    bals.append(balance(part))
+  return bals
 
 def transfer(amount, gas_amount):
   tx_hash = contract.transact(trans()).execute_transfer(amount*(10**18), gas_amount)
@@ -94,24 +107,25 @@ def set_withdrawal_gas(gas_amount):
 def ideal_lifecycle():
   init_bals = balances()
   contract_bal_i = balance(contract.address)
+  partners_bals_i = partners_balances()
   buy(1,1000)  
-  later_bals = balances()
   transfer(100,3000)
-  buy(2,5000)
-  buy(3,3000)
-  buy(4,7000)
+  buy(2,1000)
+  buy(3,2000)
   transfer_all(3000) 
   last_bals = balances()
   print([x-y for x,y in zip(init_bals,last_bals)])  
   contract_bal_f = balance(contract.address)
   print("Contract balance difference:", contract_bal_i - contract_bal_f)
+  partners_bals_f = partners_balances()
+  print("Partners balances differences", [x-y for x,y in zip(partners_bals_i,partners_bals_f)])
 
 
-def partial_refund():
-  contract_bal_i = balance(contract.address)
+def partial_auto_refund():
   init_bals = balances()
+  contract_bal_i = balance(contract.address)
+  partners_bals_i = partners_balances()
   buy(1,1000)  
-  later_bals = balances()
   transfer(1000,3000)
   buy(2,1000)
   buy(3,2000)
@@ -123,11 +137,14 @@ def partial_refund():
   contract_bal_f = balance(contract.address)
   print("Contract balance difference:", contract_bal_i - contract_bal_f)
   print([x-y for x,y in zip(init_bals,last_bals)])  
+  partners_bals_f = partners_balances()
+  print("Partners balances differences", [x-y for x,y in zip(partners_bals_i,partners_bals_f)])
 
 
 def manual_refund_total():
   init_bals = balances()
   contract_bal_i = balance(contract.address)
+  partners_bals_i = partners_balances()
   buy(1,1000)  
   buy(2,1000)
   buy(3,2000)
@@ -139,11 +156,14 @@ def manual_refund_total():
   print([x-y for x,y in zip(init_bals,last_bals)])  
   contract_bal_f = balance(contract.address)
   print("Contract balance difference:", contract_bal_i - contract_bal_f)
+  partners_bals_f = partners_balances()
+  print("Partners balances differences", [x-y for x,y in zip(partners_bals_i,partners_bals_f)])
 
 
 def auto_refund_total():
   init_bals = balances()
   contract_bal_i = balance(contract.address)
+  partners_bals_i = partners_balances()
   buy(1,1000)  
   buy(2,1000)
   buy(3,2000)
@@ -155,6 +175,29 @@ def auto_refund_total():
   print([x-y for x,y in zip(init_bals,last_bals)])  
   contract_bal_f = balance(contract.address)
   print("Contract balance difference:", contract_bal_i - contract_bal_f)
+  partners_bals_f = partners_balances()
+  print("Partners balances differences", [x-y for x,y in zip(partners_bals_i,partners_bals_f)])
+
+
+def partial_manual_refund():
+  init_bals = balances()
+  contract_bal_i = balance(contract.address)
+  partners_bals_i = partners_balances()
+  buy(1,1000)  
+  transfer(1000,3000)
+  buy(2,1000)
+  buy(3,2000)
+  enable_refunds()
+  withdraw(2)
+  withdraw(3)
+  withdraw(1)
+  last_bals = balances()
+  contract_bal_f = balance(contract.address)
+  print("Contract balance difference:", contract_bal_i - contract_bal_f)
+  print([x-y for x,y in zip(init_bals,last_bals)])  
+  partners_bals_f = partners_balances()
+  print("Partners balances differences", [x-y for x,y in zip(partners_bals_i,partners_bals_f)])
 
 
 addAddress()
+
