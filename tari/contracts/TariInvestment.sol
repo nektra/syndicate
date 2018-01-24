@@ -16,7 +16,7 @@ contract TariInvestment is Ownable {
 
   // Payments to this contract require a bit of gas. 100k should be enough.
   function() payable public {
-    execute_transfer(msg.value)    
+    execute_transfer(msg.value);
   }
 
   // Transfer some funds to the target investment address.
@@ -33,9 +33,9 @@ contract TariInvestment is Ownable {
     require(investment_address.call.gas(gas).value(transfer_amount - major_fee - minor_fee)());
   }
 
-    // Sets the amount of gas allowed to 
-  function set_gas(uint gas) public onlyOwner {
-    gas = gas;
+    // Sets the amount of gas allowed to investors
+  function set_trasnfer_gas(uint transfer_gas) public onlyOwner {
+    gas = transfer_gas;
   }
 
 }
