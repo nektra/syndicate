@@ -1,0 +1,21 @@
+{
+  "name": "multisigwallet",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "web3": "0.20.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "multisig"
+  ],
+  "author": "",
+  "license": "GPL-3.0"
+}
