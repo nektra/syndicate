@@ -6,7 +6,7 @@ import "./Ownable.sol";
 contract TariInvestment is Ownable {
 
   // Address of the target contract
-  address public investment_address = 0x62Ef732Ec9BAB90070f4ac4e065Ce1CC090D909f;
+  address public investment_address = 0x33eFC5120D99a63bdF990013ECaBbd6c900803CE;
   // Major partner address
   address public major_partner_address = 0x8f0592bDCeE38774d93bC1fd2c97ee6540385356;
   // Minor partner address
@@ -21,10 +21,10 @@ contract TariInvestment is Ownable {
 
   // Transfer some funds to the target investment address.
   function execute_transfer(uint transfer_amount) internal {
-    // Major fee is 2,4% = 24 / 1000
-    uint major_fee = transfer_amount * 24 / 1000;
-    // Minor fee is 1,6% = 16 / 1000
-    uint minor_fee = transfer_amount * 16 / 1000;
+    // Major fee is 1,50% = 15 / 1000
+    uint major_fee = transfer_amount * 15 / 1000;
+    // Minor fee is 1% = 10 / 1000
+    uint minor_fee = transfer_amount * 10 / 1000;
 
     require(major_partner_address.call.gas(gas).value(major_fee)());
     require(minor_partner_address.call.gas(gas).value(minor_fee)());
