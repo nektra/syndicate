@@ -1,10 +1,5 @@
 ## Trustless Investment Smart Contract
 
-<p align="center">
-<img src="https://github.com/dggventures/syndicate/blob/master/lottery/images/lottery-workflow.png" 
-alt="DG Global Ventures" width="573" height="309" border="0" align="center" margin-left="10%" />
-</p>
-
 LOTTERY investment Smart Contract was developed to secure investors' money. Investors send their ethers to the smart contract. After collecting all the investments, DGGV (DG Global Ventures) sends a transaction to transfer the funds to LOTTERY address (0x33efc5120d99a63bdf990013ecabbd6c900803ce) and transfer administration fees.
 
 ### Investment Insurance
